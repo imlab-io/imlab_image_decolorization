@@ -12,7 +12,7 @@ thumbnail: /assets/post_resources/image_decolorization/thumbnail.png
 
 Pek çok görüntü işleme uygulamasında (yüz, plaka, karakter tanıma gibi) ve işleminde (kenar, anahtar nokta tespiti gibi) renk bilgisinden çok doku bilgisine ihtiyaç duyulmaktadır.  Bu nedenle hem uygulamaların hızlandırılması hem de işlem karmaşıklığının azaltılması için genellikle renk bilgisi bir gri seviye dönüşüm ile kaldırılmaktadır. Dönüşüm sonucunda üç farklı kanaldan (R,G,B) oluşan renkli sayısal bir imge, tek bir kanala indirgenir ve renkler siyahın farklı tonları ile kodlanır.
 
-Literatürde önerilen ve yaygın olarak kullanılan gri seviye dönüşümü, Kırmızı, Yeşil ve Mavi kanallarının sırasıyla <img src="assets/post_resources/math//f47dbb55d4e5235a23184a5b656a8d97.svg?invert_in_darkmode" align=middle width=37.44306224999999pt height=21.18721440000001pt/>, <img src="assets/post_resources/math//b535ed221092e320b71ec039d8af5c8c.svg?invert_in_darkmode" align=middle width=37.44306224999999pt height=21.18721440000001pt/> ve <img src="assets/post_resources/math//157546634f99fdb0828c9341a3b0f7af.svg?invert_in_darkmode" align=middle width=37.44306224999999pt height=21.18721440000001pt/> ağırlıklarıyla çarpılıp, toplanmasıyla yapılmaktadır. Ancak böyle bir dönüşüm doku bilgisinin tutulmasını garanti altına almamaktadır.
+Literatürde önerilen ve yaygın olarak kullanılan gri seviye dönüşümü, Kırmızı, Yeşil ve Mavi kanallarının sırasıyla $0.299$, $0.587$ ve $0.114$ ağırlıklarıyla çarpılıp, toplanmasıyla yapılmaktadır. Ancak böyle bir dönüşüm doku bilgisinin tutulmasını garanti altına almamaktadır.
 
 <!--more-->
 
@@ -24,25 +24,25 @@ Bir imgedeki doku bilgisi imge gözekleri arasındaki fark ile tanımlanır. İy
 
 ![Renk Körlüğü Test Patterni][image_decolorization]
 
-İşlemi matematiksel olarak ifade etmek için rastgele seçilen iki noktayı  <img src="assets/post_resources/math//332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode" align=middle width=9.39498779999999pt height=14.15524440000002pt/> ve <img src="assets/post_resources/math//deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode" align=middle width=8.649225749999989pt height=14.15524440000002pt/> olarak isimlendirelim. Gri seviye imge (<img src="assets/post_resources/math//3cf4fbd05970446973fc3d9fa3fe3c41.svg?invert_in_darkmode" align=middle width=8.430376349999989pt height=14.15524440000002pt/>) tek kanaldan oluştuğundan iki gözek arasındaki fark doğrudan <img src="assets/post_resources/math//73b5353608fd9095cfd8f115165e5da2.svg?invert_in_darkmode" align=middle width=51.12822989999999pt height=19.1781018pt/> işlemi ile bulunacaktır. Renkli resimde de bu iki gözek arasındaki farka <img src="assets/post_resources/math//060ac3383fb7c5a726d1b56503a7883b.svg?invert_in_darkmode" align=middle width=25.744052399999987pt height=22.831056599999986pt/> diyelim. Amacımız imge içerisinden seçilebilecek tüm <img src="assets/post_resources/math//0acac2a2d5d05a8394e21a70a71041b4.svg?invert_in_darkmode" align=middle width=25.350096749999988pt height=14.15524440000002pt/> çiftleri  için <img src="assets/post_resources/math//2ef5b0430e1df578de5b1faef5b3e814.svg?invert_in_darkmode" align=middle width=110.57069594999999pt height=22.831056599999986pt/> eşitliğini sağlayan gri seviye dönüşümü bulmak. Bu eşitliği sağlamak oldukça güç olduğundan amacımızı <img src="assets/post_resources/math//73b5353608fd9095cfd8f115165e5da2.svg?invert_in_darkmode" align=middle width=51.12822989999999pt height=19.1781018pt/> farkını olabildiğince  <img src="assets/post_resources/math//59866b1f7cafd9d1528d02c5e092f9e9.svg?invert_in_darkmode" align=middle width=25.744052399999987pt height=22.831056599999986pt/> farkına yaklaştırmak olarak yenilersek, aradığımız gri seviye imge <img src="assets/post_resources/math//3cf4fbd05970446973fc3d9fa3fe3c41.svg?invert_in_darkmode" align=middle width=8.430376349999989pt height=14.15524440000002pt/>; 
+İşlemi matematiksel olarak ifade etmek için rastgele seçilen iki noktayı  $x$ ve $y$ olarak isimlendirelim. Gri seviye imge ($g$) tek kanaldan oluştuğundan iki gözek arasındaki fark doğrudan $g_x-g_y$ işlemi ile bulunacaktır. Renkli resimde de bu iki gözek arasındaki farka $\delta_{x,y}$ diyelim. Amacımız imge içerisinden seçilebilecek tüm $x,y$ çiftleri  için $g_x-g_y  =  \delta_{x,y}$ eşitliğini sağlayan gri seviye dönüşümü bulmak. Bu eşitliği sağlamak oldukça güç olduğundan amacımızı $g_x-g_y$ farkını olabildiğince  $ \delta_{x,y}$ farkına yaklaştırmak olarak yenilersek, aradığımız gri seviye imge $g$; 
 
-<p align="center"><img src="assets/post_resources/math//53f28cdb75211937be06bd5e3cccf1a0.svg?invert_in_darkmode" align=middle width=232.82891774999996pt height=40.548151049999994pt/></p>
+$$E(g) = \sum_{(x,y)\in P} (g_x-g_y  -  \delta_{x,y})^2$$
 
-enerji fonksiyonunu en aza indiren imgedir. Burada <img src="assets/post_resources/math//df5a289587a2f0247a5b97c1e8ac58ca.svg?invert_in_darkmode" align=middle width=12.83677559999999pt height=22.465723500000017pt/> işlemin hızlandırılıması için imge üzerinden rastgele seçilmiş  <img src="assets/post_resources/math//0acac2a2d5d05a8394e21a70a71041b4.svg?invert_in_darkmode" align=middle width=25.350096749999988pt height=14.15524440000002pt/> çiftleri havuzunu göstermektedir.
+enerji fonksiyonunu en aza indiren imgedir. Burada $P$ işlemin hızlandırılıması için imge üzerinden rastgele seçilmiş  $x,y$ çiftleri havuzunu göstermektedir.
 
-Artık bilinmeyen değişkenleri ele alarak yöntemi kodlamaya başlayabiliriz. Denklemin ilk bilinmeyeni gri seviye imge <img src="assets/post_resources/math//3cf4fbd05970446973fc3d9fa3fe3c41.svg?invert_in_darkmode" align=middle width=8.430376349999989pt height=14.15524440000002pt/> dir. Basitlik olması açısından gri seviyeli imgenin ağırlıklı ortalama yöntemi ile oluştuğunu varsayabiliriz. Dolayısıyla <img src="assets/post_resources/math//3cf4fbd05970446973fc3d9fa3fe3c41.svg?invert_in_darkmode" align=middle width=8.430376349999989pt height=14.15524440000002pt/> imgesi matematiksel olarak 
+Artık bilinmeyen değişkenleri ele alarak yöntemi kodlamaya başlayabiliriz. Denklemin ilk bilinmeyeni gri seviye imge $g$ dir. Basitlik olması açısından gri seviyeli imgenin ağırlıklı ortalama yöntemi ile oluştuğunu varsayabiliriz. Dolayısıyla $g$ imgesi matematiksel olarak 
 
-<p align="center"><img src="assets/post_resources/math//39ce6dfe63ff97a93d6dea8bea8753f8.svg?invert_in_darkmode" align=middle width=166.1923362pt height=15.936036599999998pt/></p>
+$$g=w_rR+w_gG+w_bB$$
 
 şeklindedir. Burada klasik yöntemden farklı olarak kanal katsayıları sabit değildir ve enerji fonksiyonunu en azlayan ağırlık değerleri katsayı olarak seçilecektir.  
   
-İkinci bilinmeyenimiz <img src="assets/post_resources/math//060ac3383fb7c5a726d1b56503a7883b.svg?invert_in_darkmode" align=middle width=25.744052399999987pt height=22.831056599999986pt/>, iki renk arasındaki uzaklığın ölçüsüdür. Yukarıdaki örnek imge üzerinden devam edersek, <img src="assets/post_resources/math//060ac3383fb7c5a726d1b56503a7883b.svg?invert_in_darkmode" align=middle width=25.744052399999987pt height=22.831056599999986pt/> mavi rengin yeşile olan uzaklığını göstermektedir. Peki iki renk arasındaki uzaklığı nasıl ölçebiliriz?
+İkinci bilinmeyenimiz $\delta_{x,y}$, iki renk arasındaki uzaklığın ölçüsüdür. Yukarıdaki örnek imge üzerinden devam edersek, $\delta_{x,y}$ mavi rengin yeşile olan uzaklığını göstermektedir. Peki iki renk arasındaki uzaklığı nasıl ölçebiliriz?
 
   
 
 Şüphesiz akla gelen ilk yöntem Öklid uzaklığını kullanmak olacaktır. Bu durumda uzaklık değerimiz; 
 
-<p align="center"><img src="assets/post_resources/math//0f03edf36d9134924a44f424c38eef82.svg?invert_in_darkmode" align=middle width=330.04909904999994pt height=29.58934275pt/></p>
+$$\delta_{x,y}=\sqrt{(R_x-R_y)^2 (G_x-G_y)^2+(B_x-B_y)^2}$$
 
 ifadesi ile bulunabilir. Aşağıda verilen tabloda renkler ilk sırada yer alan renge olan Öklid uzaklıklarına göre sıralanmıştır.
 
@@ -113,7 +113,7 @@ Lab renk uzayı kullanılarak ölçülen Öklid uzaklığı iki renk arasındaki
 </tbody>
 </table>
 
-Denklemle ilgili tüm bilinmeyenlerimizi açıkladığımıza göre kanal ağırlıklarını bulmaya başlayabiliriz. İlk yapmamız gereken imge üzerinde `K` tane gözek çifti seçerek bu çiftler arasındaki uzaklığı <img src="assets/post_resources/math//060ac3383fb7c5a726d1b56503a7883b.svg?invert_in_darkmode" align=middle width=25.744052399999987pt height=22.831056599999986pt/> bulmak.
+Denklemle ilgili tüm bilinmeyenlerimizi açıkladığımıza göre kanal ağırlıklarını bulmaya başlayabiliriz. İlk yapmamız gereken imge üzerinde `K` tane gözek çifti seçerek bu çiftler arasındaki uzaklığı $\delta_{x,y}$ bulmak.
 
 ```c
 void sample(BMP I, RGBA *C1, RGBA *C2, float *D, int K)
@@ -137,9 +137,9 @@ void sample(BMP I, RGBA *C1, RGBA *C2, float *D, int K)
 }
 ```
 
-Yukarıda verilen fonksiyon imge üzerinde rastgele nokta çiftleri seçmekte ve bu noktadaki renkleri `C1` ve `C2` değişkenlerinde saklamakta. `D` değişkeninde ise yukarıda anlatımını ve çıkarımını yaptığımız <img src="assets/post_resources/math//060ac3383fb7c5a726d1b56503a7883b.svg?invert_in_darkmode" align=middle width=25.744052399999987pt height=22.831056599999986pt/> değeri saklanmakta.
+Yukarıda verilen fonksiyon imge üzerinde rastgele nokta çiftleri seçmekte ve bu noktadaki renkleri `C1` ve `C2` değişkenlerinde saklamakta. `D` değişkeninde ise yukarıda anlatımını ve çıkarımını yaptığımız $\delta_{x,y}$ değeri saklanmakta.
 
-Gözekler arasındaki uzaklık bulunduktan sonra tek yapmamız gereken imgeyi <img src="assets/post_resources/math//579ece2a055b49c6ab3b9aba7c74af3a.svg?invert_in_darkmode" align=middle width=70.62531299999999pt height=14.15524440000002pt/> ağırlıklarını kullanarak gri seviyeye çevirip, enerji fonksiyonumuzun değerini kontrol etmek. Bu çalışmaya özel ağırlıkları bulmak için kullanılacak en hızlı yöntem deneme yanılma yöntemidir. Ağırlıkları belirlemek için üç ağırlık değeri de sıfırdan başlayarak 0.1 artımlarla artırılarak enerji fonksiyonunun değeri hesaplanır. Denenmesi gerek ağırlık kırmızı kanal için 11, yeşil kanal için 11 ve mavi kanal için 11 tanedir. Ancak  <img src="assets/post_resources/math//6b5549a95cd5d5a66809f3a0b1763ab2.svg?invert_in_darkmode" align=middle width=127.15466444999997pt height=21.18721440000001pt/> şartının da sağlanması gerektiğinden denenebilecek toplam 66 farklı ağırlık çifti vardır. Ağırlıklardan bazıları aşağıdaki tabloda verilmiştir.
+Gözekler arasındaki uzaklık bulunduktan sonra tek yapmamız gereken imgeyi $w_r, w_g, w_b$ ağırlıklarını kullanarak gri seviyeye çevirip, enerji fonksiyonumuzun değerini kontrol etmek. Bu çalışmaya özel ağırlıkları bulmak için kullanılacak en hızlı yöntem deneme yanılma yöntemidir. Ağırlıkları belirlemek için üç ağırlık değeri de sıfırdan başlayarak 0.1 artımlarla artırılarak enerji fonksiyonunun değeri hesaplanır. Denenmesi gerek ağırlık kırmızı kanal için 11, yeşil kanal için 11 ve mavi kanal için 11 tanedir. Ancak  $w_r+w_g+w_b=1$ şartının da sağlanması gerektiğinden denenebilecek toplam 66 farklı ağırlık çifti vardır. Ağırlıklardan bazıları aşağıdaki tabloda verilmiştir.
 
 |||||||||||||||
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
